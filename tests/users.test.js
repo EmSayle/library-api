@@ -19,7 +19,7 @@ describe('/user', () => {
           password: 'password1'
         })
         .end((error, res) => {
-          expect(error).to.equal(null);;
+          expect(error).to.equal(null);
           
           expect(res.status).to.equal(201);
 
@@ -36,4 +36,34 @@ describe('/user', () => {
         });
     });
   });
+    it('api validates the email address is valid', (done) => {
+      chai.request(server)
+      .post('/user')
+      .send({
+        firstName: 'Terry',
+        secondName: 'Tester',
+        email: 'emailemail.com',
+        password: 'password1'
+      })
+      .end((error, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.errors.email).to.equal('please enter a valid email address');
+        done();
+      })
+    })
+    it('api validates the password is 8 characters long', (done) => {
+      chai.request(server)
+      .post('/user')
+      .send({
+        firstName: 'Terry',
+        secondName: 'Tester',
+        email: 'emaile@mail.com',
+        password: 'pass'
+      })
+      .end((error, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.errors.password).to.equal('please enter a valid password');
+        done();
+      })
+    })
 });

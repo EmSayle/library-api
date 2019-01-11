@@ -19,6 +19,7 @@
   "homepage": "https://github.com/EmSayle/library-api#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "isemail": "^3.2.0",
     "mongoose": "^5.4.2"
   },
   "devDependencies": {

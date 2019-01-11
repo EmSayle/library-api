@@ -1,11 +1,24 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const isEmail = require('isemail');
 
 const userSchema = new mongoose.Schema({
-  firstName: String,
-  secondName: String,
-  email: String,
-  password: String
+  firstName: {
+    type: String,
+    required: [true, 'You must enter a first name']
+  },
+  secondName: {
+    type: String,
+    required: [true, 'You must enter a second name']
+  },
+  email: {
+    type: String,
+    validate: [ isEmail.validate, 'please enter a valid email address' ]
+  },
+  password: {
+    type: String,
+    minlength: [ 8, 'please enter a valid password' ]
+  },
 });
 
 userSchema.pre('save', function encryptPassword(next) {
